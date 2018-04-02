@@ -3,7 +3,7 @@ package com.pxy.tutor.web.vo.request;
 import lombok.Data;
 
 @Data
-public class RequestStudentLogin {
+public class RequestTutorLogin {
 
     private String no;
 

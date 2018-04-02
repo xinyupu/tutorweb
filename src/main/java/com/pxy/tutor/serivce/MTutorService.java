@@ -16,11 +16,12 @@ public class MTutorService {
     @Autowired
     public IMTutorRepository tutorRepository;
 
-    public void saveTutor(MTutor mTutor) {
+    public MTutor saveTutor(MTutor mTutor) {
         MTutor tutor = this.tutorRepository.findByTutorNO(mTutor.getTutorNO());
         if (tutor == null) {
-            this.tutorRepository.save(mTutor);
+            return this.tutorRepository.save(mTutor);
         }
+        return tutor;
     }
 
     public void updateTutor(MTutor mTutor) {
@@ -31,7 +32,7 @@ public class MTutorService {
 
     public List<MTutor> getTutor(int page, String city) {
         Pageable pageable = new PageRequest(page, 10);
-        List<MTutor> content = tutorRepository.findByAddressContains(city, pageable).getContent();
+        List<MTutor> content = tutorRepository.findByAddressContainsOrderByIdDesc(city, pageable).getContent();
         if (content.size() == 0) throw new WebException("暂无该城市数据");
         return content;
     }
@@ -40,7 +41,10 @@ public class MTutorService {
         MTutor byTutorNOAndPwd = tutorRepository.findByTutorNOAndPwd(no, pwd);
         if (byTutorNOAndPwd == null) throw new WebException("编号或密码错误");
         return byTutorNOAndPwd;
+    }
 
+    public  MTutor findByTutorNO(String teachNo){
+        return tutorRepository.findByTutorNO(teachNo);
     }
 
     public List<MTutor> getAll() {

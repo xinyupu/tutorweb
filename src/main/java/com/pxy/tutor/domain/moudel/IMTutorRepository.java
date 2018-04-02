@@ -8,6 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface IMTutorRepository extends JpaRepository<MTutor,Long> {
     MTutor findByTutorNO(String teachNo);
     MTutor findByTutorNOAndPwd(String no,String pwd);
-
-    Page<MTutor> findByAddressContains(String city, Pageable pageable);
+    Page<MTutor> findByAddressContainsOrderByIdDesc(String city, Pageable pageable);
 }

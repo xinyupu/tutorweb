@@ -17,30 +17,33 @@ import java.util.concurrent.Executors;
 public class SocketService {
 
     private ServerSocket serverSocket;
-    private Selector selector = null;
-    private ServerSocketChannel serverSocketChannel = null;
-    private int port = 8000;
-    private Charset charset = Charset.forName("UTF-8");
+    private Socket connection = null;
+    private ExecutorService service;
 
-    private Map<String, SocketChannel> serverSocketMap;//记录socket的键值对
 
     public static void main(String[] agr0) {
         new SocketService();
+
     }
 
     public SocketService() {
+        service = Executors.newCachedThreadPool();
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    ExecutorService service = Executors.newFixedThreadPool(50);
                     serverSocket = new ServerSocket(1503);
                     while (true) {
                         //接收客户端连接的socket对象
-                        Socket connection = null;
+
                         //接收客户端传过来的数据，会阻塞
                         connection = serverSocket.accept();
-                        service.execute(new SubPolThread(connection));
+                        service.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                new SubPolParse(connection);
+                            }
+                        });
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
