@@ -29,6 +29,14 @@ public class MStudent {
     @Column(name = "HeadUrl")
     private String headUrl;
 
+    @Column(name = "StudentCondition")
+    private String studentCondition;
+
+
+    @Column(name = "StudentRequireDesc")
+    private String studentRequireDesc;
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
@@ -103,5 +111,21 @@ public class MStudent {
 
     public void setHeadUrl(String headUrl) {
         this.headUrl = headUrl;
+    }
+
+    public String getStudentCondition() {
+        return studentCondition;
+    }
+
+    public void setStudentCondition(String studentCondition) {
+        this.studentCondition = studentCondition;
+    }
+
+    public String getStudentRequireDesc() {
+        return studentRequireDesc;
+    }
+
+    public void setStudentRequireDesc(String studentRequireDesc) {
+        this.studentRequireDesc = studentRequireDesc;
     }
 }
